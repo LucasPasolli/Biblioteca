@@ -8,14 +8,18 @@ class Autor(models.Model):
     def __str__(self):
         return '{}'.format(self.nombre)
 
+
+
 class Libro(models.Model):
-    titulo=models.CharField(max_length=20)
-    editorial=models.CharField(max_length=20)
-    paginas=models.IntegerField
-    codigo=models.AutoField(primary_key=True)
-    autor=models.ForeignKey(Autor, on_delete=models.CASCADE)
+    
+    codigo = models.AutoField(primary_key = True)
+    titulo = models.CharField(max_length = 30)
+    editorial = models.CharField(max_length = 30)
+    autor = models.ForeignKey(Autor, on_delete = models.CASCADE)
+    paginas = models.IntegerField(default='1')
     def __str__(self):
-        return '{}'.format(self.titulo)
+        return str(self.titulo)
+
 
 
 class Ejemplar(models.Model):
@@ -34,3 +38,15 @@ class Usuario(models.Model):
     ejemplares=models.ManyToManyField(Ejemplar)
     def __str__(self):
         return '{}'.format(self.nombre)
+
+
+class Entry(models.Model):
+    autor = models.ForeignKey(Autor, on_delete=models.CASCADE,)
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+
+    def __unicode__(self):
+        return '%s' % self.title
+
+    def get_nombre(self):
+        return self.autor.nombre

@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import *
 
 class EjemplarAdmin(admin.ModelAdmin):
-    list_display = ['libro', 'codigo', 'localizacion']
+    list_display = ['codigo', 'localizacion', 'libro']
     list_display_links = ('codigo', 'localizacion', 'libro')
     search_fields = ['libro__titulo']
 
@@ -26,14 +26,15 @@ class EntryAdmin(admin.ModelAdmin):
 class LibroAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'editorial')
     
-class LibroInline(admin.TabularInline):
+class LibroInline(admin.StackedInline):
     model = Libro
+    extra=0
     fields = ['titulo', 'editorial', 'paginas']
 
 class AutorAdmin(admin.ModelAdmin):
-    list_display = ['nombre',]
-    list_display_links = ('nombre',)
-    search_fields = ['nombre']
+    list_display = ['nombre', 'codigo']
+    list_display_links = ('nombre', 'codigo')
+    search_fields = ['nombre',]
     inlines = [LibroInline]
     
 
